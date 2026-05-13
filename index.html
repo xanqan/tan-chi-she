@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>贪吃蛇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 560px;
+            padding: 0 8px;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .hud span {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .hud .score {
+            color: #4ecca3;
+            font-weight: 600;
+        }
+
+        .hud .best {
+            color: #f9a825;
+        }
+
+        canvas {
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(78, 204, 163, 0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="hud">
+            <span>分数: <b class="score" id="score">0</b></span>
+            <span>速度: <b class="score" id="speed">1</b></span>
+            <span>最高: <b class="best" id="best">0</b></span>
+        </div>
+        <canvas id="canvas"></canvas>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
