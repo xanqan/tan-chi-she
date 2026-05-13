@@ -23,7 +23,7 @@
 
     // --- Init ---
     function resizeCanvas() {
-        const maxPx = Math.min(window.innerWidth - 32, window.innerHeight - 80, 560);
+        const maxPx = Math.max(320, Math.min(window.innerWidth - 32, window.innerHeight - 80, 560));
         const px = Math.floor(maxPx / GRID_SIZE) * GRID_SIZE;
         canvas.width = px;
         canvas.height = px;
@@ -68,14 +68,15 @@
 
     // --- High Score ---
     function getBest() {
-        return parseInt(localStorage.getItem('snake_best') || '0', 10);
+        try { return parseInt(localStorage.getItem('snake_best') || '0', 10); }
+        catch { return 0; }
     }
 
     function saveBest() {
-        const best = getBest();
-        if (score > best) {
-            localStorage.setItem('snake_best', score);
-        }
+        try {
+            const best = getBest();
+            if (score > best) localStorage.setItem('snake_best', score);
+        } catch {}
     }
 
     // --- Speed ---
@@ -86,7 +87,7 @@
 
     // --- Input ---
     function setDirection(d) {
-        if (state === 'PLAYING' && d !== OPP[direction]) {
+        if (state === 'PLAYING' && d !== OPP[nextDirection]) {
             nextDirection = d;
         }
     }
@@ -199,7 +200,7 @@
     function draw() {
         const W = canvas.width;
         const H = canvas.height;
-        pulsePhase += 0.06;
+        pulsePhase += state === 'PLAYING' ? 0.06 : 0;
 
         // Background
         ctx.fillStyle = '#1a1a2e';
@@ -317,7 +318,7 @@
     // --- Main Loop ---
     function loop(timestamp) {
         if (!lastTime) lastTime = timestamp;
-        const dt = timestamp - lastTime;
+        const dt = Math.min(timestamp - lastTime, 500);
         lastTime = timestamp;
 
         if (state === 'PLAYING') {
